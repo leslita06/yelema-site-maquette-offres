@@ -1,4 +1,4 @@
-name: Maquette offres (Pages)
+name: Maquette offres Pages
 on:
   push:
     branches: [main]
@@ -14,24 +14,23 @@ jobs:
       name: github-pages
       url: ${{ steps.dep.outputs.page_url }}
     steps:
-      - name: Base : maquette finale (main)
+      - name: Base maquette finale
         uses: actions/checkout@v4
         with:
           repository: leslita06/yelema-site-finale
           ref: main
           path: site
-      - name: Script : branche maquette-offres-261101
+      - name: Script maquette-offres
         uses: actions/checkout@v4
         with:
           repository: leslita06/yelema-site-finale
           ref: maquette-offres-261101
           path: script
-      - name: Générer la maquette
+      - name: Generer la maquette
         run: |
           rm -rf site/.git
           python3 script/maquette-offres/build_site.py site
           test -f site/offres-executif.html
-          grep -L noindex site/*.html | head -5 || true
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
